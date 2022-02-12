@@ -13,3 +13,7 @@ Project 1 Sprint 2
 1. Gibeom Park
 2. The first table is the top 250 tv user rating infromation, and the second table and filled with information of the program include five programs.
 4. I spent a lot of time trying the API more than 100 times a day because there was an error without knowing that I received an email. Eventually, I paid for the API, and now I can try many things, so it's really good.
+
+
+* my jetbrain has issue about git push and commit.
+* I trying to fix it but not working. Jetbrains give me a error message "Error 403: Not Authorized"
