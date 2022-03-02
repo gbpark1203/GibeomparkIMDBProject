@@ -17,3 +17,10 @@ Project 1 Sprint 2
 
 * my jetbrain has issue about git push and commit.
 * I trying to fix it but not working. Jetbrains give me a error message "Error 403: Not Authorized"
+
+
+Project 1 Sprint 3
+
+1. Gibeom Park
+2. Install Instruction - two text files(predata.txt, show_data.txt) , secrets.py and Import requests and secrets, sqlite
+3. The program used the IMDB API, searching for the top 250 TV show data and top 200 user ratings, most popular shows, movies, and top 250 movies. This data is inserted into the SQLITE database.
