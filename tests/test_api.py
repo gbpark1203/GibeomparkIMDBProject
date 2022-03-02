@@ -1,3 +1,8 @@
+# import pytest
+# import main
+# import pytest
+
+
 import sqlite3
 import imdbDB
 
@@ -36,6 +41,15 @@ def test_db():
             data['full_title'] == entry[0]['fullTitle'] and data['year'] == entry[0]['year'] and
             data['crew'] == entry[0]['crew'] and data['imdb_rating'] == entry[0]['imDbRating'] and
             data['imdb_rating_count'] == entry[0]['imDbRatingCount'])
+  
+def test_new_table_created():
+    # conn, cursor = databases.open_db('IMDBDatabase.sqlite')
+    #
+    # assert cursor.execute('''
+    #     SELECT NAME FROM sqlite_master WHERE type='table';
+    #     ''').fetchall() == 1
+    pass
+
 
 if __name__ == '__main__':
     print(test_top_250_tv())
