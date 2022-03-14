@@ -3,10 +3,14 @@
 # Dr. John F. Santore
 # Gibeom Park
 
+import sys
 import requests
 import secrets
 import sqlite3
+import firstwindow
 from typing import Tuple
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
 
 # Sprint 1
 
@@ -90,24 +94,27 @@ def db_setup(cursor: sqlite3.Cursor):
     );''')
     return
 
+
 def db_open(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
     connection = sqlite3.connect(filename)
     cursor = connection.cursor()
     return connection, cursor
+
 
 def db_close(connection: sqlite3.Connection):
     connection.commit()
     connection.close()
     return
 
+
 def db_populate_top250(connection: sqlite3.Connection, cursor: sqlite3.Cursor, datalist):
     for item in datalist:
         cursor.execute("""INSERT INTO show_data (id, title, fullTitle, crew, showYear, imdbRating, imdbRatingCount)
-        VALUES (?,?,?,?,?,?,?)""",
-                       (item['id'], item['title'], item['fullTitle'], item['crew'], item['year'],
-                        item['imDbRating'], item['imDbRatingCount']))
+        VALUES (?,?,?,?,?,?,?)""", (item['id'], item['title'], item['fullTitle'], item['crew'], item['year'],
+                                    item['imDbRating'], item['imDbRatingCount']))
     connection.commit()
     return
+
 
 def db_populate_ratings(connection: sqlite3.Connection, cursor: sqlite3.Cursor,
                         datalist_one, iddata_one, datalist_two, iddata_two, datalist_three,
@@ -225,6 +232,7 @@ def db_setup_two(cursor: sqlite3.Cursor):
     )''')
     return
 
+
 def db_populate_popular_tv(connection: sqlite3.Connection, cursor: sqlite3.Cursor, datalist_tv):
     for item in datalist_tv:
         cursor.execute("""INSERT INTO popular_tv_data (id, rank, rankUpDown, title, fullTitle,
@@ -233,6 +241,7 @@ def db_populate_popular_tv(connection: sqlite3.Connection, cursor: sqlite3.Curso
                         item['crew'], item['year'], item['imDbRating'], item['imDbRatingCount']))
     connection.commit()
     return
+
 
 def db_populate_top250_movies(connection: sqlite3.Connection, cursor: sqlite3.Cursor, datalist_topmovies):
     for item in datalist_topmovies:
@@ -243,6 +252,7 @@ def db_populate_top250_movies(connection: sqlite3.Connection, cursor: sqlite3.Cu
         connection.commit()
     return
 
+
 def db_populate_popular_movies(connection: sqlite3.Connection, cursor: sqlite3.Cursor, datalist_movies):
     for item in datalist_movies:
         cursor.execute("""INSERT INTO popular_movie_data (id, rank, rankUpDown, title, fullTitle,
@@ -251,6 +261,7 @@ def db_populate_popular_movies(connection: sqlite3.Connection, cursor: sqlite3.C
                         item['crew'], item['year'], item['imDbRating'], item['imDbRatingCount']))
     connection.commit()
     return
+
 
 def get_rank_updown(connection: sqlite3.Connection, cursor: sqlite3.Cursor):
     cursor.execute('SELECT MAX(rankUpDown) FROM popular_movie_data')
@@ -310,8 +321,13 @@ def get_rank_updown(connection: sqlite3.Connection, cursor: sqlite3.Cursor):
     return
 
 
-# ------------------------------------ Main ------------------------------------------ #
+# Sprint 4
 
+def gui_setup():
+    app = QApplication(sys.argv)
+    Firstwindow = firstwindow.FirstWindow()
+    Firstwindow.show()
+    sys.exit(app.exec())
 
 def main():  # Main
     url = f"https://imdb-api.com/en/API/Top250TVs/{secrets.secret_key}"
@@ -383,8 +399,8 @@ def main():  # Main
     db_setup(cursor)
     db_populate_top250(connection, cursor, datalist)
     db_populate_ratings(connection, cursor,
-                        datalist_one, iddata_one, datalist_two, iddata_two, datalist_three, iddata_three, datalist_four, iddata_four, datalist_five,
-                        iddata_five)
+                        datalist_one, iddata_one, datalist_two, iddata_two, datalist_three, iddata_three, datalist_four,
+                        iddata_four, datalist_five, iddata_five)
     db_close(connection)
 
     # sprint 3
@@ -395,6 +411,7 @@ def main():  # Main
     get_rank_updown(connection, cursor)
     db_close(connection)
 
+    gui_setup()
     return
 
 
